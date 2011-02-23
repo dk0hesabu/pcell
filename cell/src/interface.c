@@ -14,7 +14,7 @@ void interfaceInit(interface_t ifType) {
     FIO2DIR &= ~0x0000000C; // inputs on P2.3-P2.2; sensor out and in 
     break;
   case ALARM:
-    FIO2DIR |= 0x00000004;  // outputs on P2.2; alarm sounder and led
+    PINSEL4 |= 0x00000010;  // PWM selected on P2.2 (PWM1.3)
     FIO2DIR &= ~0x0000000B; // inputs on P2.3,P2.1,P2.0; button, sensor in and out 
     break;
   default:

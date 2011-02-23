@@ -46,20 +46,24 @@ void LcdSetReset (Boolean State)
  * Description: Set backlight pin state
  *
  *************************************************************************/
+
+#if 0
 void LCDSetBacklight (Int8U Light)
 {
   PWM1MR6 = BACKLIGHT_OFF + Light;
   PWM1LER_bit.EM6L = 1;
 }
+#endif 
 
-// Lynch code
-void Backlight(unsigned char state) {
-   if(state == 1)
+// Modified Lynch code -DK
+void LCDSetBacklight(unsigned char state) {
+   if (state == 0) {
 //MODIFIED      pPIOB->PIO_SODR = BIT20; // Set PB20 to HIGH
-        IO1SET= BIT26;
-   else
+        FIO1CLR = BIT26;
+   } else {
 //MODIFIED      pPIOB->PIO_CODR = BIT20; // Set PB20 to LOW
-        IO1CLR= BIT26;
+        FIO1SET = BIT26;
+   }
 }
 
 /*************************************************************************
@@ -72,16 +76,17 @@ void Backlight(unsigned char state) {
  *************************************************************************/
 void LcdLLInit (void)
 {
-	// LCD Reset output
-    LCD_RST_FDIR |= LCD_RST_MASK;
+  // LCD Reset output
+  LCD_RST_FDIR |= LCD_RST_MASK;
 
   LcdSetReset(0);
 
-  // Lynch code
-//  PINSEL3_bit.P1_26= 0;
-//  IO1DIR= BIT26;
-//  IO1SET= BIT26;
+  // Turn backlight on full - DK
+  PINSEL3_bit.P1_26 = 0;
+  FIO1DIR |= BIT26;
+  FIO1SET = BIT26;
   
+#if 0
 	// LCD backlight PWM 8bit init
   PINSEL3_bit.P1_26 = 2;    // assign P1.26 to PWM1
   PCONP_bit.PCPWM1 = 1;     // enable clock of PWM1
@@ -101,6 +106,7 @@ void LcdLLInit (void)
   PWM1TCR_bit.CR = 0;       // release reset
   PWM1TCR_bit.CE = 1;       // enable counting
   LCDSetBacklight(0);
+  #endif 
 }
 
 /*************************************************************************

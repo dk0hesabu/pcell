@@ -2,7 +2,7 @@
 
 <workspace>
   <project>
-    <path>$WS_DIR$\celltest\celltest.ewp</path>
+    <path>$WS_DIR$\conveyor_test\conveyor_test.ewp</path>
   </project>
   <batchBuild/>
 </workspace>

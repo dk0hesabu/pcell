@@ -16,8 +16,9 @@
 #ifndef __GLCD_LL_H
 #define __GLCD_LL_H
 
-#define BACKLIGHT_OFF   0x40
-#define BACKLIGHT_ON    0x20
+/* Old values BACKLIGHT_OFF 0x40, BACKLIGHT_ON 0x20 */
+#define BACKLIGHT_OFF   0x00
+#define BACKLIGHT_ON    0x01
 #define SSP_FIFO_SIZE 8
 
 extern Int32U getFpclk(Int32U Periphery);
