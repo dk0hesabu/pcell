@@ -11,9 +11,9 @@ typedef enum controlAlarmState {CONTROL_ALARM_OFF, CONTROL_ALARM_ON} controlAlar
 
 void controlInit(void);
 void controlAlarmSetState(controlAlarmState_t);
-void controlAlarmToggleState(void);
 controlAlarmState_t controlAlarmGetState(void);
-bool controlAlarmButtonPressed(void);
+void controlAlarmToggleState(void);
+bool controlEmergencyStopButtonPressed(void);
 bool controlItemPresent(uint32_t);
 
 

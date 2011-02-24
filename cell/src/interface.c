@@ -6,16 +6,16 @@ void interfaceInit(interface_t ifType) {
   PINSEL4 = 0x00000000;   // GPIO selected on all pins
   FIO2DIR |= 0x000000F0;  // outputs on P2.7-P2.4 for the data leds.
   switch (ifType) {
-  case ROBOT:
-    PINSEL4 |= 0x00000055; // PWM selected on P2.3-P2.0
+  case CONTROL:
+    PINSEL4 |= 0x00000010;  // PWM selected on P2.2 (PWM1.3)
+    FIO2DIR &= ~0x0000000B; // inputs on P2.3,P2.1,P2.0; button, sensor in and out 
     break;
   case CONVEYOR:
     FIO2DIR |= 0x00000003;  // outputs on P2.1-P2.0; motor enable and direction
     FIO2DIR &= ~0x0000000C; // inputs on P2.3-P2.2; sensor out and in 
     break;
-  case ALARM:
-    PINSEL4 |= 0x00000010;  // PWM selected on P2.2 (PWM1.3)
-    FIO2DIR &= ~0x0000000B; // inputs on P2.3,P2.1,P2.0; button, sensor in and out 
+  case ROBOT:
+    PINSEL4 |= 0x00000055; // PWM selected on P2.3-P2.0
     break;
   default:
     break;

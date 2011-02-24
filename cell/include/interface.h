@@ -10,7 +10,7 @@
 #define D4_LED 0x00000010
 
 
-typedef enum interface {NO_DEVICE, ROBOT, CONVEYOR, ALARM} interface_t;
+typedef enum interface {NO_DEVICE, CONTROL, CONVEYOR, ROBOT} interface_t;
 
 void interfaceInit(interface_t);
 void interfaceLedSetState(uint32_t, ledState_t);

@@ -4,12 +4,12 @@
 #include <interface.h>
 #include <control.h>
 
-#define ALARM_BUTTON  0x00000008
+#define EMERGENCY_STOP_BUTTON  0x00000008
 
 static controlAlarmState_t state = CONTROL_ALARM_OFF;
 
 void controlInit(void) {
-  interfaceInit(ALARM);
+  interfaceInit(CONTROL);
   pwmInit(440);             // major cycle 440Hz
   pwmChannelInit(PWM3, 0);  // duty cycle 0% on channel 3 
   controlAlarmSetState(CONTROL_ALARM_OFF);
@@ -18,12 +18,18 @@ void controlInit(void) {
 
 void controlAlarmSetState(controlAlarmState_t newState) {
   if (newState == CONTROL_ALARM_ON) {
-    pwmChangeDutyCycle(PWM3, 50);
+    pwmChangeDutyCycle(PWM3, 500000); // duty cycle 50% on channel 3
   } else {
-    pwmChangeDutyCycle(PWM3, 0);
+    pwmChangeDutyCycle(PWM3, 0);      // duty cycle 0% on channel 3
   }
   state = newState;
 }
+
+
+controlAlarmState_t controlAlarmGetState(void) {
+  return state;
+}
+
 
 void controlAlarmToggleState(void) {
   if (state == CONTROL_ALARM_OFF) {
@@ -33,13 +39,9 @@ void controlAlarmToggleState(void) {
   }
 }
 
-controlAlarmState_t controlAlarmGetState(void) {
-  return state;
-}
 
-
-bool controlAlarmButtonPressed(void) {
-  return (FIO2PIN & ALARM_BUTTON ? false : true); 
+bool controlEmergencyStopButtonPressed(void) {
+  return (FIO2PIN & EMERGENCY_STOP_BUTTON ? false : true); 
 }
 
 
