@@ -192,7 +192,19 @@ static void appTaskButtons(void *pdata) {
       static uint8_t joint = ROBOT_HAND;
       static uint32_t leds[5] = {D1_LED, D1_LED, D2_LED, D3_LED, D4_LED};
       static bool jsRightPressed = false;
+      static bool robotTestStart = true;
       
+      if (robotTestStart) {
+        lcdSetTextPos(2, 7);
+        lcdWrite("HAND :%08u", robotJointGetState(ROBOT_HAND));
+        lcdSetTextPos(2, 8);
+        lcdWrite("WRIST:%08u", robotJointGetState(ROBOT_WRIST));
+        lcdSetTextPos(2, 9);
+        lcdWrite("ELBOW:%08u", robotJointGetState(ROBOT_ELBOW));
+        lcdSetTextPos(2, 10);
+        lcdWrite("WAIST:%08u", robotJointGetState(ROBOT_WAIST));
+        robotTestStart = false;
+      }
       if (isButtonPressedInState(msg.dataA, JS_RIGHT)) {
         jsRightPressed = true;
       }
@@ -204,11 +216,15 @@ static void appTaskButtons(void *pdata) {
       interfaceLedSetState(leds[joint], LED_ON);
 
       if (isButtonPressedInState(msg.dataA, JS_UP)) {
-        robotJointStepUp((robotJoint_t)joint);
+        robotJointSetState((robotJoint_t)joint, ROBOT_JOINT_POS_INC);
+        lcdSetTextPos(8, 6+joint);
+        lcdWrite("%08u", robotJointGetState((robotJoint_t)joint));
       } else if (isButtonPressedInState(msg.dataA, JS_DOWN)) {
-        robotJointStepDown((robotJoint_t)joint);
+        robotJointSetState((robotJoint_t)joint, ROBOT_JOINT_POS_DEC);
+        lcdSetTextPos(8, 6+joint);
+        lcdWrite("%08u", robotJointGetState((robotJoint_t)joint));
       }
-    }                       
+   }                       
 #endif
     OSTimeDly(20);
   }
@@ -276,6 +292,7 @@ static void appTaskLink(void *pdata) {
 
 static void appTaskDisplay(void *pdata) {
   message_t msg;
+#ifndef ROBOT_TEST
   lcdSetTextPos(2, 2);
   lcdWrite("BUT 1 : ");
   lcdSetTextPos(2, 3);
@@ -290,7 +307,7 @@ static void appTaskDisplay(void *pdata) {
   lcdWrite("AC.Y  : ");
   lcdSetTextPos(2, 10);
   lcdWrite("AC.Z  : ");
-  
+#endif
   /* Task main loop */
   while (true) {
     OSSemPend(fullSlot, 0, &osEventErr);
@@ -298,6 +315,7 @@ static void appTaskDisplay(void *pdata) {
     getBuffer(&msg);
     OSMutexPost(bufMutex);
     OSSemPost(freeSlot);
+#ifndef ROBOT_TEST
     switch (msg.id) {
     case BUTTONS_TASK_ID : {
       buttonsMsgSrc(&msg);
@@ -315,6 +333,7 @@ static void appTaskDisplay(void *pdata) {
       unknownMsgSrc(&msg);
     }
     } 
+#endif
   }
 }
 

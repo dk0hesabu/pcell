@@ -10,41 +10,46 @@
  * 
  */
 #define PWM_MAJOR_CYCLE_HZ 50
+#define JOINT_MIDPOS 68750
 
-static uint32_t jointPos[5] = {JOINT_MIDPOS, JOINT_MIDPOS, JOINT_MIDPOS, JOINT_MIDPOS, JOINT_MIDPOS};
+#define HAND_NEUTRAL 68750
+#define WRIST_NEUTRAL 82250
+#define ELBOW_NEUTRAL 87500
+#define WAIST_NEUTRAL 67250
+
+static uint32_t jointPos[5] = {JOINT_MIDPOS, HAND_NEUTRAL, WRIST_NEUTRAL, ELBOW_NEUTRAL, WAIST_NEUTRAL};
 
 void robotInit(void) {
   interfaceInit(ROBOT);
   pwmInit(PWM_MAJOR_CYCLE_HZ);               // set major cycle (should be 20ms period)        
-  pwmChannelInit((pwmIdentifier_t)ROBOT_HAND, JOINT_MIDPOS);  // set duty cycle to 7.5%  (1.5ms)
-  pwmChannelInit((pwmIdentifier_t)ROBOT_WRIST, JOINT_MIDPOS); // set duty cycle to 7.5%  (1.5ms)
-  pwmChannelInit((pwmIdentifier_t)ROBOT_ELBOW, JOINT_MIDPOS); // set duty cycle to 7.5%  (1.5ms)
-  pwmChannelInit((pwmIdentifier_t)ROBOT_WAIST, JOINT_MIDPOS); // set duty cycle to 7.5%  (1.5ms)
+  pwmChannelInit((pwmIdentifier_t)ROBOT_HAND, HAND_NEUTRAL);  
+  pwmChannelInit((pwmIdentifier_t)ROBOT_WRIST, WRIST_NEUTRAL); 
+  pwmChannelInit((pwmIdentifier_t)ROBOT_ELBOW, ELBOW_NEUTRAL); 
+  pwmChannelInit((pwmIdentifier_t)ROBOT_WAIST, WAIST_NEUTRAL); 
 }
 
-uint32_t robotJointStepUp(robotJoint_t joint) {
+void robotJointSetState(robotJoint_t joint, robotJointStep_t step) {
   uint32_t newJointPos;
   
   assert((ROBOT_HAND <= joint)&&(joint <= ROBOT_WAIST));
-  newJointPos = jointPos[joint] + JOINT_STEP;
-  if (newJointPos > JOINT_MAXPOS) {
-    newJointPos = JOINT_MAXPOS;
-  } 
+  if (step == ROBOT_JOINT_POS_INC) {
+    newJointPos = jointPos[joint] + JOINT_STEP;
+    if (newJointPos > JOINT_MAXPOS) {
+      newJointPos = JOINT_MAXPOS;
+    }
+  } else {
+    newJointPos = jointPos[joint] - JOINT_STEP;  
+    if (newJointPos < JOINT_MINPOS) {
+      newJointPos = JOINT_MINPOS;
+    } 
+  }
   pwmChangeDutyCycle((pwmIdentifier_t)joint, newJointPos);
   jointPos[joint] = newJointPos;
-  return (newJointPos);
 }
 
-uint32_t robotJointStepDown(robotJoint_t joint) {
-  uint32_t newJointPos;
-  
+uint32_t robotJointGetState(robotJoint_t joint) {
   assert((ROBOT_HAND <= joint)&&(joint <= ROBOT_WAIST));
-  newJointPos = jointPos[joint] - JOINT_STEP;  
-  if (newJointPos < JOINT_MINPOS) {
-    newJointPos = JOINT_MINPOS;
-  } 
-  pwmChangeDutyCycle((pwmIdentifier_t)joint, newJointPos);
-  jointPos[joint] = newJointPos;
-  return (newJointPos);
+  return jointPos[joint];
 }
+
 
