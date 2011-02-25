@@ -1,0 +1,50 @@
+[JLinkDriver]
+WatchCond=_ 0
+Watch0=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
+Watch1=_ 0 "" 0 "" 0 "" 0 "" 0 0 0 0
+[DebugChecksum]
+Checksum=-2112793391
+[DisAssemblyWindow]
+NumStates=_ 1
+State 1=_ 1
+[InstructionProfiling]
+Enabled=_ 0
+[CodeCoverage]
+Enabled=_ 0
+[Profiling]
+Enabled=0
+[StackPlugin]
+Enabled=1
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnHow=0
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=109314320
+Graph=0
+Symbiont=0
+[Disassemble mode]
+mode=0
+[Breakpoints]
+Count=0
+[Aliases]
+A0=_ "C:\Users\ochrelands\Documents\david\courses\cm034\workspace\Micrium\Software\uCOS-II\Source\os_core.c" ""
+A1=_ "C:\Users\ochrelands\Documents\david\courses\cm034\workspace\Micrium\Software\uCOS-II\Source\os_time.c" ""
+A2=_ "C:\Users\ochrelands\Documents\david\courses\cm034\workspace\cell\src\conveyor.c" ""
+A3=_ "C:\Users\ochrelands\Documents\david\courses\cm034\workspace\projects\conveyor_test\src\os\osutils.c" ""
+Count=4
+SuppressDialog=0
