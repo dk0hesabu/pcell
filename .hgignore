@@ -1,6 +1,10 @@
 syntax: glob
-projects/*/settings
-projects/*/Flash
 *~
 *\#
 *.o
+*.dep
+
+syntax: regexp
+/settings$
+/Flash$
+
