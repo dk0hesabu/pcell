@@ -4,6 +4,15 @@
   <project>
     <path>$WS_DIR$\cell_tests\cell_tests.ewp</path>
   </project>
+  <project>
+    <path>$WS_DIR$\convTest\convTest.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\ctrlTest\ctrlTest.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\robotTest\robotTest.ewp</path>
+  </project>
   <batchBuild/>
 </workspace>
 
