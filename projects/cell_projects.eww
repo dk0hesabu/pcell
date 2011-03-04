@@ -2,6 +2,12 @@
 
 <workspace>
   <project>
+    <path>$WS_DIR$\canReceiverPolling\canReceiverPolling.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\canSender\canSender.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\cell_tests\cell_tests.ewp</path>
   </project>
   <project>

@@ -7,6 +7,7 @@
 #include <potentiometer.h>
 #include <accelerometer.h>
 #include <lcd.h>
+#include <can.h>
 #include <bsp.h>
 
 
@@ -300,5 +301,6 @@ void bspInit(void) {
   potentiometerInit();
   accelerometerInit();
   lcdInit();
+  canInit();
   __enable_interrupt();
  }
