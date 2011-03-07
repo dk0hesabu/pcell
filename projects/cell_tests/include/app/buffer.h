@@ -1,6 +1,8 @@
 #ifndef __BUFFER_H
 #define __BUFFER_H
 
+#include <stdint.h>
+
 #define BUF_SIZE 6
 
 
