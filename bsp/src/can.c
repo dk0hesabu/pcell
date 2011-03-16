@@ -33,15 +33,17 @@ void canInit(void) {
   PCONP |= (1 << 13) | (1 << 14); // Enable clock to the peripheral
 
   PINSEL0 &= ~0x00000F0F;
-  PINSEL0 |= 0x0000A05; // port0.0~1, function 0x01, port0.4~5, function 0x10
+  PINSEL0 |= 0x0000A05;   // port0.0~1, function 0x01, port0.4~5, function 0x10
 
-  AFMR = ACCF_BYPASS;        // Acceptance filtering off, receive all messages
+  AFMR = ACCF_BYPASS;     // Acceptance filtering off, receive all messages
   CAN1MOD = CAN2MOD = 1;  // Reset CAN
   CAN1IER = CAN2IER = 0;  // Disable Receive Interrupt
   CAN1GSR = CAN2GSR = 0;  // Reset error counter when CANxMOD is in reset
 
-  CAN1BTR = CAN2BTR = BITRATE100K28_8MHZ;
-  CAN1MOD = CAN2MOD = 0x0;  // CAN in normal operation mode
+  CAN1BTR = BITRATE100K28_8MHZ;
+  CAN2BTR = BITRATE100K28_8MHZ;
+  CAN1MOD = 0x0;          // CAN in normal operation mode
+  CAN2MOD = 0x0;
 }
 
 /* 
@@ -164,3 +166,17 @@ bool can2SendMessage(canMessage_t *msg) {
   return result;
 }
           
+
+/*
+ * Returns Global Status Register for chosen CAN port
+ *
+ * 31      24 23      16 15       8  7   6   5   4   3   2   1   0
+ * +---------+---------+-----------+---+---+---+---+---+---+---+---+
+ * | TXERROR | RXERROR | Reserved  | BS| ES| TS| RS|TCS|TBS|DOS|RBS|
+ * +---------+---------+-----------+---+---+---+---+---+---+---+---+
+ *
+ */
+uint32_t canStatus(uint8_t port) {
+  assert((port == 1) || (port == 2));
+  return (port == 1 ? CAN1GSR : CAN2GSR);
+}

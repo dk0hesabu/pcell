@@ -9,6 +9,7 @@
 #ifndef __CAN_H
 #define __CAN_H
 
+#include <stdint.h>
 #include <bsp.h>
 
 typedef struct canMessage {
@@ -22,6 +23,7 @@ void canInit(void);
 bool canWrite(uint8_t port, canMessage_t *message);
 void canRead(uint8_t port, canMessage_t *message);
 bool canReady(uint8_t port);
+uint32_t canStatus(uint8_t);
 void canRxInterrupt(pVoidFunc_t);
   
 #endif

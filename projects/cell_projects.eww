@@ -2,6 +2,9 @@
 
 <workspace>
   <project>
+    <path>$WS_DIR$\canReceiverInterruptDriven\canReceiverInterruptDriven.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\canReceiverPolling\canReceiverPolling.ewp</path>
   </project>
   <project>

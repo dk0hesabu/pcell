@@ -11,6 +11,7 @@
 #include <osutils.h>
 #include <can.h>
 #include <leds.h>
+#include <lcd.h>
 #include <interface.h>
 
 /*************************************************************************
@@ -60,9 +61,9 @@ int main() {
 *************************************************************************/
 
 static void appTaskCanSend(void *pdata) {
-  canMessage_t msg;
-  uint32_t txCount;
-  bool txOk;
+  canMessage_t msg = {0, 0, 0, 0};
+  uint32_t txCount = 0;
+  bool txOk = false;
     
   /* Initialise the hardware and start the OS ticker
    * (must be done in the highest priority task)
@@ -88,6 +89,8 @@ static void appTaskCanSend(void *pdata) {
       txCount += 1;
       msg.dataA = txCount;
     }
+    lcdSetTextPos(2, 1);
+    lcdWrite("CAN1GSR: %08x", canStatus(1));
     OSTimeDly(1000);
   }
 }
