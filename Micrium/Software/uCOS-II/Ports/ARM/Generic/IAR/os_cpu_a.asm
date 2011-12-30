@@ -386,7 +386,7 @@ OS_CPU_ARM_ExceptIrqHndlr
     STMFD   SP!, {R0-R12, LR}                                   ; Push working registers.
     MOV     R3, LR                                              ; Save link register.
     MOV     R0, #OS_CPU_ARM_EXCEPT_IRQ                          ; Set exception ID to OS_CPU_ARM_EXCEPT_IRQ.
-    B            OS_CPU_ARM_ExceptHndlr                         ; Branch to global exception handler.
+    B       OS_CPU_ARM_ExceptHndlr                              ; Branch to global exception handler.
 
 
 ;********************************************************************************************************
@@ -403,7 +403,7 @@ OS_CPU_ARM_ExceptFiqHndlr
     STMFD   SP!, {R0-R12, LR}                                   ; Push working registers.
     MOV     R3, LR                                              ; Save link register.
     MOV     R0, #OS_CPU_ARM_EXCEPT_FIQ                          ; Set exception ID to OS_CPU_ARM_EXCEPT_FIQ.
-    B            OS_CPU_ARM_ExceptHndlr                         ; Branch to global exception handler.
+    B       OS_CPU_ARM_ExceptHndlr                              ; Branch to global exception handler.
 
 
 ;********************************************************************************************************

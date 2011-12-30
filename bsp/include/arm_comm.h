@@ -85,7 +85,7 @@ unsigned long tmp;
   return(tmp);
 }
 
-inline __arm void ExtCritSection(Save)
+inline __arm void ExtCritSection(int Save)
 {
 unsigned long tmp;
   tmp = __get_CPSR();
@@ -100,7 +100,7 @@ unsigned long tmp;
   return(tmp);
 }
 
-inline __arm void ExtCritSectionFiq(Save)
+inline __arm void ExtCritSectionFiq(int Save)
 {
 unsigned long tmp;
   tmp = __get_CPSR();

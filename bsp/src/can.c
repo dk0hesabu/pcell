@@ -5,11 +5,15 @@
 #include <can.h>
 #include <bsp.h>
 
-// #define CAN_MEM_BASE    0xE0038000
 
-// #define MAX_PORTS 2   /* Number of CAN port on the chip */    
+/**
+ * Bit Timing Values for 15MHz(60Mhz CCLK) clk frequency
+ */
+#define BITRATE100K15MHZ		0x0007000E
+#define BITRATE125K15MHZ		0x0007000B
+#define BITRATE250K15MHZ		0x00070005
+#define BITRATE500K15MHZ		0x00070002
 
-#define BITRATE100K28_8MHZ        0x00090017
 
 #define ACCF_BYPASS          0x02   // filter off, receive all
 
@@ -23,7 +27,7 @@ void canRxInterrupt(pVoidFunc_t);
 /* Please note, this PCLK is set in the bsp.h file. Since the example
   program is set to test USB device, there is only a limited number of
   options to set CCLK and PCLK when USB is used. The default setting is
-  CCLK 57.6MHz, PCLK is 1/2 CCLK 28.8MHz. The bit timing is based on the
+  CCLK 60MHz, PCLK is 1/4 CCLK so 15MHz. The bit timing is based on the
   setting of the PCLK, if different PCLK is used, please read can.h carefully
   and set your CAN bit timing accordingly.
 
@@ -36,12 +40,15 @@ void canInit(void) {
   PINSEL0 |= 0x0000A05;   // port0.0~1, function 0x01, port0.4~5, function 0x10
 
   AFMR = ACCF_BYPASS;     // Acceptance filtering off, receive all messages
-  CAN1MOD = CAN2MOD = 1;  // Reset CAN
-  CAN1IER = CAN2IER = 0;  // Disable Receive Interrupt
-  CAN1GSR = CAN2GSR = 0;  // Reset error counter when CANxMOD is in reset
+  CAN1MOD = 1;
+  CAN2MOD = 1;  // Reset CAN
+  CAN1IER = 0;
+  CAN2IER = 0;  // Disable Receive Interrupt
+  CAN1GSR = 0;
+  CAN2GSR = 0;  // Reset error counter when CANxMOD is in reset
 
-  CAN1BTR = BITRATE100K28_8MHZ;
-  CAN2BTR = BITRATE100K28_8MHZ;
+  CAN1BTR = BITRATE100K15MHZ;
+  CAN2BTR = BITRATE100K15MHZ;
   CAN1MOD = 0x0;          // CAN in normal operation mode
   CAN2MOD = 0x0;
 }
@@ -51,7 +58,8 @@ void canInit(void) {
  */
 void canRxInterrupt(pVoidFunc_t canHandler) {
   vicInstallIRQhandler(canHandler, 1, VIC_CAN12);
-  CAN1IER = CAN2IER = 0x01;   // Enable receive interrupts
+  CAN1IER = 0x01;
+  CAN2IER = 0x01;   // Enable receive interrupts
 } 
 
 
@@ -63,7 +71,7 @@ void canRxInterrupt(pVoidFunc_t canHandler) {
  */
 bool canReady(uint8_t port) {
   assert((port == 1) || (port == 2));
-  return (CANRXSR & (1 << (7 + port)));
+  return ((CANRXSR & (1 << (7 + port)) ? true : false));
 }
 
           
@@ -101,7 +109,6 @@ void canRead(uint8_t port, canMessage_t *msg) {
   }
 }
 
-          
 bool can1SendMessage(canMessage_t *msg) {
   uint32_t canStatus;
   bool result = false;

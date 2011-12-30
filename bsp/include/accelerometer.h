@@ -15,6 +15,12 @@
 
 #include <stdint.h>
 
+typedef enum {
+  ACCEL_X = 1UL,
+  ACCEL_Y = 0UL,
+  ACCEL_Z = 6UL
+} accelerometerChannel_t;
+
 /* Initialise the ADC to read X, Y and X axis accelerometer values
  */
 void accelerometerInit( void );
@@ -23,6 +29,6 @@ void accelerometerInit( void );
 
 /* Read the ADC to determine an accelerometer channel value
  */
-uint32_t accelerometerRead( uint32_t );
+uint32_t accelerometerRead( accelerometerChannel_t );
 
 #endif
