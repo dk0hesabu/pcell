@@ -204,7 +204,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state></state>
+          <state>Pa082</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -296,11 +296,8 @@
           <state>$TOOLKIT_DIR$\INC\NXP</state>
           <state>$PROJ_DIR$\include</state>
           <state>$PROJ_DIR$\..\..\bsp\include</state>
-          <state>$PROJ_DIR$\..\..\Micrium\Software\ucos-ii\ports\arm\generic\iar</state>
-          <state>$PROJ_DIR$\..\..\Micrium\Software\ucos-ii\source</state>
-          <state>$PROJ_DIR$\..\..\Micrium\Software\uc-lib</state>
-          <state>$PROJ_DIR$\..\..\Micrium\Software\uc-cpu</state>
-          <state>$PROJ_DIR$\..\..\Micrium\Software\uc-cpu\arm\IAR</state>
+          <state>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include</state>
+          <state>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -545,7 +542,11 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$TOOLKIT_DIR$\INC\NXP</state>
+          <state>$PROJ_DIR$\include</state>
+          <state>$PROJ_DIR$\..\..\bsp\include</state>
+          <state>$PROJ_DIR$\..\..\FreeRTOS\Source\include</state>
+          <state>$PROJ_DIR$\..\..\FreeRTOS\Source\portable\IAR\LPC2000</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -665,7 +666,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -950,107 +951,86 @@
     <file>
       <name>$PROJ_DIR$\..\..\bsp\src\pwm.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$\..\..\bsp\src\timers.c</name>
-    </file>
   </group>
   <group>
-    <name>Micrium</name>
+    <name>FreeRTOS</name>
     <group>
-      <name>uC/CPU</name>
+      <name>include</name>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-CPU\ARM\IAR\cpu.h</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\croutine.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-CPU\ARM\IAR\cpu_a.s</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\FreeRTOS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-CPU\cpu_def.h</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\mpu_wrappers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\portable.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\projdefs.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\queue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\semphr.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\StackMacros.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\task.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\include\timers.h</name>
       </file>
     </group>
     <group>
-      <name>uC/LIB</name>
+      <name>portable</name>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-LIB\lib_def.h</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\MemMang\heap_1.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-LIB\lib_mem.c</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378\ISR_Support.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-LIB\lib_mem.h</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378\lpc2378_cstartup.s</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-LIB\lib_str.c</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378\lpc2378_timers.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\..\Micrium\Software\uC-LIB\lib_str.h</name>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378\port.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378\portasm.s79</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\portable\IAR\LPC2378\portmacro.h</name>
       </file>
     </group>
     <group>
-      <name>uC/OS-II</name>
-      <group>
-        <name>Port</name>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\cstartup.s</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\os_cpu.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\os_cpu_a.asm</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\os_cpu_c.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\os_dbg.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\os_dcc.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\osutils.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Ports\ARM\Generic\IAR\osutils.h</name>
-        </file>
-      </group>
-      <group>
-        <name>Source</name>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_core.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_flag.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_mbox.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_mem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_mutex.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_q.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_sem.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_task.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_time.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\os_tmr.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\..\Micrium\Software\uCOS-II\Source\ucos_ii.h</name>
-        </file>
-      </group>
+      <name>src</name>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\croutine.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FreeRTOSV7.1.0\Source\queue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FREERTOSV7.1.0\Source\tasks.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\..\FREERTOSV7.1.0\Source\timers.c</name>
+      </file>
     </group>
   </group>
   <group>
@@ -1058,7 +1038,7 @@
     <group>
       <name>include</name>
       <file>
-        <name>$PROJ_DIR$\include\os_cfg.h</name>
+        <name>$PROJ_DIR$\include\FreeRTOSConfig.h</name>
       </file>
     </group>
     <group>

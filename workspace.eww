@@ -5,6 +5,12 @@
     <path>$WS_DIR$\projects\blinkyBare\blinkyBare.ewp</path>
   </project>
   <project>
+    <path>$WS_DIR$\projects\blinkyBC\blinkyBC.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\projects\blinkyFree\blinkyFree.ewp</path>
+  </project>
+  <project>
     <path>$WS_DIR$\projects\blinkyMicrium\blinkyMicrium.ewp</path>
   </project>
   <project>
