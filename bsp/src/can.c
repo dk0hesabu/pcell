@@ -6,14 +6,29 @@
 #include <bsp.h>
 
 
+/*
+ * Bit Timing Values for 60MHz clk frequency
+ */
+#define BITRATE100K60MHZ          0x00090031
+#define BITRATE125K60MHZ          0x00090027
+#define BITRATE250K60MHZ          0x00090013
+#define BITRATE500K60MHZ          0x00090009
+#define BITRATE1000K60MHZ         0x00090004
+
+
 /**
  * Bit Timing Values for 15MHz(60Mhz CCLK) clk frequency
- */
+ *
 #define BITRATE100K15MHZ		0x0007000E
 #define BITRATE125K15MHZ		0x0007000B
 #define BITRATE250K15MHZ		0x00070005
 #define BITRATE500K15MHZ		0x00070002
+ */
 
+
+#ifndef CAN_BITRATE
+#define CAN_BITRATE BITRATE100K60MHZ
+#endif
 
 #define ACCF_BYPASS          0x02   // filter off, receive all
 
@@ -27,7 +42,8 @@ void canRxInterrupt(pVoidFunc_t);
 /* Please note, this PCLK is set in the bsp.h file. Since the example
   program is set to test USB device, there is only a limited number of
   options to set CCLK and PCLK when USB is used. The default setting is
-  CCLK 60MHz, PCLK is 1/4 CCLK so 15MHz. The bit timing is based on the
+  CCLK 60MHz, PCLK is 1/4 CCLK so 15MHz, except for CAN1, CAN2 and ACF where
+  PCLK is set to CCLK. The bit timing is based on the
   setting of the PCLK, if different PCLK is used, please read can.h carefully
   and set your CAN bit timing accordingly.
 
@@ -47,8 +63,8 @@ void canInit(void) {
   CAN1GSR = 0;
   CAN2GSR = 0;  // Reset error counter when CANxMOD is in reset
 
-  CAN1BTR = BITRATE100K15MHZ;
-  CAN2BTR = BITRATE100K15MHZ;
+  CAN1BTR = CAN_BITRATE;
+  CAN2BTR = CAN_BITRATE;
   CAN1MOD = 0x0;          // CAN in normal operation mode
   CAN2MOD = 0x0;
 }
@@ -69,17 +85,17 @@ void canRxInterrupt(pVoidFunc_t canHandler) {
  * bit 8 in CANRXSR is set if message available for port 1
  * bit 9 in CANRXSR is set if message available for port 2
  */
-bool canReady(uint8_t port) {
-  assert((port == 1) || (port == 2));
-  return ((CANRXSR & (1 << (7 + port)) ? true : false));
+bool canReady(uint32_t port) {
+  assert((port == 0) || (port == 1));
+  return ((CANRXSR & (1 << (8 + port)) ? true : false));
 }
 
           
-bool canWrite(uint8_t port, canMessage_t *msg) {
+bool canWrite(uint32_t port, canMessage_t *msg) {
   bool result;
   
-  assert((port ==1) || (port == 2));
-  if (port == 1) {
+  assert((port ==0) || (port == 1));
+  if (port == 0) {
     result = can1SendMessage(msg);
   } else { 
     result = can2SendMessage(msg);
@@ -92,9 +108,9 @@ bool canWrite(uint8_t port, canMessage_t *msg) {
 /*
  * Assume 11-bit identifier
  */          
-void canRead(uint8_t port, canMessage_t *msg) {
-  assert((port == 1) || (port == 2));
-  if (port == 1) {
+void canRead(uint32_t port, canMessage_t *msg) {
+  assert((port == 0) || (port == 1));
+  if (port == 0) {
     msg->id = (CAN1RID & 0x000007FF);
     msg->len = ((CAN1RFS & 0x000F0000) >> 16);
     msg->dataA = CAN1RDA;
@@ -183,7 +199,7 @@ bool can2SendMessage(canMessage_t *msg) {
  * +---------+---------+-----------+---+---+---+---+---+---+---+---+
  *
  */
-uint32_t canStatus(uint8_t port) {
-  assert((port == 1) || (port == 2));
-  return (port == 1 ? CAN1GSR : CAN2GSR);
+uint32_t canStatus(uint32_t port) {
+  assert((port == 0) || (port == 1));
+  return (port == 0 ? CAN1GSR : CAN2GSR);
 }

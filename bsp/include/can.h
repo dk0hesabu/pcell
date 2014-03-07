@@ -9,8 +9,14 @@
 #ifndef __CAN_H
 #define __CAN_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <bsp.h>
+
+enum {
+  CAN_PORT_1 = 0,
+  CAN_PORT_2 = 1
+};
 
 typedef struct canMessage {
   uint32_t id;
@@ -44,21 +50,21 @@ void canInit(void);
  * indicated by the message length can be assumed to be valid; the 
  * remaining bytes should be assumed to be any old rubbish
  */
-bool canWrite(uint8_t port, canMessage_t *message);
-void canRead(uint8_t port, canMessage_t *message);
+bool canWrite(uint32_t port, canMessage_t *message);
+void canRead(uint32_t port, canMessage_t *message);
 
 
 /* Returns true if there is data ready to be read from
  * CAN port 'port'; otherwise returns false
  */
-bool canReady(uint8_t port);
+bool canReady(uint32_t port);
 
 
 /*
  * Returns the value of the global CAN status register 
  * for the chosen CAN port, ie CAN1GSR or CAN2GSR
  */
-uint32_t canStatus(uint8_t);
+uint32_t canStatus(uint32_t);
 
 
 /* Enables receive interrupts on the CAN controller

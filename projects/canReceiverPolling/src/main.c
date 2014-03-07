@@ -75,9 +75,9 @@ static void appTaskCanReceive(void *pdata) {
    */     
   while ( true ) {
     // Try to receive message on CAN 1
-    if (canReady(1)) {  
+    if (canReady(CAN_PORT_1)) {  
       interfaceLedToggle(D1_LED);
-      canRead(1, &rxMsg);
+      canRead(CAN_PORT_1, &rxMsg);
       lcdSetTextPos(2,1);
       lcdWrite("ID     : %08x", rxMsg.id); 
       lcdSetTextPos(2,2);

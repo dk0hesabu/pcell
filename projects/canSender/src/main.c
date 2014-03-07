@@ -83,14 +83,14 @@ static void appTaskCanSend(void *pdata) {
    */     
   while ( true ) {
     // Transmit message on CAN 1
-    txOk = canWrite(1, &msg);
+    txOk = canWrite(CAN_PORT_1, &msg);
     if (txOk) {
       interfaceLedToggle(D1_LED);
       txCount += 1;
       msg.dataA = txCount;
     }
     lcdSetTextPos(2, 1);
-    lcdWrite("CAN1GSR: %08x", canStatus(1));
+    lcdWrite("CAN1GSR: %08x", canStatus(CAN_PORT_1));
     OSTimeDly(1000);
   }
 }

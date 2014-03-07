@@ -137,7 +137,7 @@ static void appTaskCanMonitor(void *pdata) {
   while (true) {
     OSMutexPend(displayMutex, 0, &error);
     lcdSetTextPos(2,5);
-    lcdWrite("CAN1GSR: %08x", canStatus(1));
+    lcdWrite("CAN1GSR: %08x", canStatus(CAN_PORT_1));
     error = OSMutexPost(displayMutex);
     OSTimeDly(20);
   }
@@ -148,8 +148,8 @@ static void appTaskCanMonitor(void *pdata) {
  * A simple interrupt handler for CAN message reception on CAN1
  */
 static void canHandler(void) {
-  if (canReady(1)) {
-    canRead(1, &can1RxBuf);
+  if (canReady(CAN_PORT_1)) {
+    canRead(CAN_PORT_1, &can1RxBuf);
     OSSemPost(can1RxSem);
   }
 }
